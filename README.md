@@ -21,6 +21,7 @@ An online demo is hosted on [Heroku](http://order-me.herokuapp.com/).
 
 ### Option 1
 * Use any webserver to host the `dist/` directory
+* eg. Run the build in PHP 5.4+ server `php -S localhost:8000`
 
 ### Option 2
 * Use the NodeJS server `web.js`
