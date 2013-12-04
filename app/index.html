@@ -1,0 +1,90 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Order Me</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+        <!-- build:css({.tmp,app}) styles/main.css -->
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="styles/main.css">
+        <!-- endbuild -->
+</head>
+  <body ng-app="orderMeApp">
+    
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Order Me</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a ng-href="/">
+                <span class="glyphicon glyphicon-home"></span>
+                Home
+              </a>
+            </li>
+            <li>
+              <a ng-href="/#/restaurants">
+                <span class="glyphicon glyphicon-cutlery"></span>
+                Restaurants
+              </a>
+            </li>
+            <li>
+              <a ng-href="/#/orders">
+                <span class="glyphicon glyphicon-shopping-cart"></span>
+                Orders
+              </a>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div>
+    </nav>
+
+    <!-- Site View -->
+    <div class="container slide-reveal" ng-view=""></div>
+
+    
+    <!-- Footer -->
+    <div class="footer">
+      <p class="pull-right">with ♥ from <a href="http://twitter.com/JonathanHindi">@JonathanHindi</a></p>
+    </div>
+
+    <script src="bower_components/jquery/jquery.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+
+    <!-- build:js scripts/plugins.js -->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js scripts/modules.js -->
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-flash/dist/angular-flash.min.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/restaurants.js"></script>
+    <script src="scripts/controllers/orders.js"></script>
+    <script src="scripts/services/localStorage.js"></script>
+    <!-- endbuild -->
+</body>
+</html>

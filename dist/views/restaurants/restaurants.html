@@ -1,0 +1,149 @@
+<div class="row">
+	
+	<!-- Flash Messages -->
+	<div ng-include="'views/partials/messages.html'"></div>
+
+	<header class="page-header clearfix">
+		<h3 class="pull-left">Restaurants</h3>
+		<br>
+		<div class="btn-group pull-right">
+			<button class="btn btn-default" ng-click="newRestaurant = null;" data-toggle="modal" data-target="#restaurant-form">
+				<span class="glyphicon glyphicon-plus-sign"></span>
+				Add Restaurant
+			</button>
+			<buttom class="btn btn-warning" ng-click="defaults()">
+				<span class="glyphicon glyphicon-repeat"></span>
+				Reset Defaults
+			</buttom>
+		</div>	
+	</header>
+	
+	<div class="jumbotron empty" ng-hide="restaurants.length">
+	  <h1>No Restaurants? Huh</h1>
+	  <p class="lead">
+	    But you can suggest one below...
+	  </p>
+	  <p>
+	  	<button class="btn btn-lg btn-primary" data-toggle="modal" ng-click="newRestaurant = {}; restForm.$setPristine();" data-target="#restaurant-form">
+	  		<span class="glyphicon glyphicon-cutlery"></span>
+	  		Add Restaurant
+	  	</button>
+	  </p>
+	</div>
+
+	<table class="table table-hover" ng-show="restaurants.length">
+
+		<tbody>
+			<tr class="repeated-item" ng-repeat="restaurant in restaurants track by restaurant.id">
+				<td>{{restaurant.name}}</td>
+				<td>
+					<a href="tel:{{restaurant.phone}}">
+						{{restaurant.phone}}
+					</a>
+				</td>
+				<td>
+					<a href="mailto:{{restaurant.mail}}">
+						{{restaurant.mail}}
+					</a>
+				</td>
+				<td>
+					<div class="btn-group pull-right">
+						<button ng-click="edit(restaurants[$index].id)" data-toggle="modal" data-target="#restaurant-form" class="btn btn-sm btn-primary">
+						<span class="glyphicon glyphicon-edit"></span>
+						Edit
+						</button> 
+						
+						<button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#warning-modal">
+						<span class="glyphicon glyphicon-trash"></span>
+						</button>
+					</div>
+
+				</td>
+			</tr>
+		</tbody>
+
+	</table>
+</div>
+
+
+<!-- Restaurant Form Modal -->
+<div class="modal fade" id="restaurant-form" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="restaurant-form" aria-hidden="true">
+
+	<div class="modal-dialog">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <h4 class="modal-title"> 
+	        <span ng-hide="newRestaurant.id">New:</span>
+	        <span ng-show="newRestaurant.id">Edit:</span>
+	        {{newRestaurant.name}}
+	        </h4>
+	    </div>
+	    <div class="modal-body">
+	      
+	        <form ng-submit="" name="restForm" id="restForm" novalidate="">
+	        	
+	        	<div class="form-group">
+		        	<div class="input-group">
+		        		<span class="input-group-addon">
+		        			<span class="glyphicon glyphicon-cutlery"></span>
+		        		</span>
+						<input placeholder="Name" type="text" class="form-control" name="name" id="name" ng-model="newRestaurant.name" required="">
+					</div>
+					<span class="help-block" ng-show="restForm.name.$dirty && restForm.name.$invalid">
+						Please enter the restaurant name.
+					</span>
+				</div>
+
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-earphone"></span>
+						</span>
+						<input placeholder="Phone" type="tel" class="form-control" name="phone" id="phone" ng-model="newRestaurant.phone" required="">
+					</div>
+
+					<span class="help-block" ng-show="restForm.phone.$dirty && restForm.phone.$invalid">
+						Please enter the restaurant phone number.
+					</span>
+
+				</div>
+					
+				<div class="form-group">
+
+		        	<div class="input-group">
+			        	<span class="input-group-addon">
+			        		<span class="glyphicon glyphicon-envelope"></span>
+				        </span>
+				        <input placeholder="Email" type="email" class="form-control" name="mail" id="mail" ng-model="newRestaurant.mail" required="">
+		        	</div>
+
+	        		<div class="help-block" ng-show="restForm.mail.$dirty && restForm.mail.$invalid">
+
+		            	<span ng-show="restForm.mail.$error.required">Email field is required.</span>
+
+		            	<span ng-show="restForm.mail.$error.email">This is not a valid email.</span>
+
+		        	</div>
+
+	        	</div>
+	  	
+	         	<input type="hidden" ng-model="newRestaurant.id">
+
+	        </form>
+	     
+	    </div>
+	    <div class="modal-footer">
+	      <button ng-click="newRestaurant = {}; restForm.$setPristine();" type="button" data-dismiss="modal" class="btn btn-default pull-left">Cancle</button>
+	      
+	      <button type="button" class="btn btn-success" data-dismiss="modal" ng-disabled="restForm.$pristine || restForm.$invalid" ng-click="save()">Save</button>
+
+	    </div>
+	  </div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
+
+
+
+<!-- Warining Modal -->
+<div class="modal fade" role="dialog" aria-labelledby="warning-modal" data-backdrop="static" aria-hidden="true" id="warning-modal" ng-include="'views/restaurants/warning.restaurants.html'">
+</div>

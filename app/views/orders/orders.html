@@ -1,0 +1,170 @@
+<div class="row">
+	
+	<!-- Flash Messages -->
+	<div ng-include="'views/partials/messages.html'" ></div>
+
+	<header class="page-header clearfix">
+		<h3 class="pull-left">Order History</h3>
+		<br>
+		<div class="btn-group pull-right">
+			<button class="btn btn-primary" data-toggle="modal" ng-click="newOrder = {}; orderForm.$setPristine();" data-target="#newOrderForm">
+				<span class="glyphicon glyphicon-plus-sign"></span>
+				New Order
+			</button>
+			<div class="input-group">
+		      <input 
+		      	type="search" 
+		      	class="form-control search" 
+		      	ng-model="searchOrders"
+		      	ng-disabled="!orders.length"
+		      	placeholder="Search for past orders">
+		    </div><!-- /input-group -->
+		</div>	
+	</header>
+	
+	<div class="jumbotron empty" ng-hide="orders.length">
+	  <h1>Aren't you hungry?</h1>
+	  <p class="lead">
+	    Click below to place a new order...
+	  </p>
+	  <p>
+	  	<button 
+	  		class="btn btn-lg btn-primary" 
+	  		data-toggle="modal" 
+	  		ng-click="newOrder = {}; orderForm.$setPristine();" 
+	  		data-target="#newOrderForm">
+	  		<span class="glyphicon glyphicon-shopping-cart"></span>
+	  		Yes I'am
+	  	</button>
+	  </p>
+	</div>
+
+	<table class="table table-hover" ng-show="orders.length">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Order Date</th>
+				<th>Details</th>
+				<th>Restaurant</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="order in orders | filter:searchOrders track by order.id" class="repeated-item">
+				<td>{{order.id}}</td>
+				<td>{{order.date | date}}</td>
+				<td>
+					{{order.details}}
+				</td>
+				<td>
+					{{order.restaurant.name}}
+				</td>
+				<td>
+					<div class="btn-group pull-right">
+						<button 
+							ng-click="reorder(order)" 
+							data-toggle="modal" 
+							data-target="#newOrderForm" 
+							class="btn btn-sm btn-success">
+
+							<span class="glyphicon glyphicon-refresh"></span>
+							Reorder
+						</button>
+					</div>
+
+				</td>
+			</tr>
+		</tbody>
+
+	</table>
+</div>
+
+<!-- New Order Modal -->
+<div class="modal fade"
+	role="dialog" 
+	aria-labelledby="newOrderForm"
+	data-backdrop="static" 
+	aria-hidden="true"
+	data-keyboard="false"  
+	id="newOrderForm">
+
+	<!-- Restaurant Form Modal -->
+
+	<div class="modal-dialog">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <h4 class="modal-title"> 
+	       	<span ng-hide="newOrder.reorder">New Order</span> 
+			<span ng-show="newOrder.reorder">Reorder</span> 
+	       	from {{newOrder.restaurant.name}}
+	        </h4>
+	    </div>
+	    <div class="modal-body">
+	      
+	        <form ng-submit="" name="orderForm" id="orderForm" novalidate>
+	        	
+	        	<div class="form-group">
+		        	<div class="input-group">
+		        		<span class="input-group-addon">
+		        			<span class="glyphicon glyphicon-cutlery"></span>
+		        		</span>
+						<select
+							type="text"
+							ng-hide="newOrder.reorder"
+							class="form-control" 
+							name="orderRest" 
+							id="orderRest" 
+							ng-model="newOrder.restaurant"
+							ng-options="restaurant.name for restaurant in restaurants" 
+							required >
+
+						</select>
+						<input 
+							type="text" 
+							ng-model="newOrder.restaurant.name" 
+							ng-disabled="newOrder.reorder" 
+							ng-show="newOrder.reorder"
+							class="form-control"
+							name="orderRest" 
+							id="orderRest"
+							required>
+					</div>
+					<span class="help-block" ng-show="orderForm.orderRest.$invalid">
+						Please choose a restaurant from the select list.
+					</span>
+				</div>
+
+				<div class="form-group">
+					<textarea 
+						placeholder="Order Details"
+						class="form-control" 
+						name="orderDetails" 
+						id="orderDetails" 
+						ng-model="newOrder.details" 
+						required 
+						rows="3">
+					</textarea>
+
+					<span class="help-block" ng-show="orderForm.orderDetails.$dirty && orderForm.orderDetails.$invalid">
+						Please enter your order details.
+					</span>
+
+				</div>
+
+	        </form>
+	     
+	    </div>
+	    <div class="modal-footer">
+	      <button ng-click="newOrder = {}; orderForm.$setPristine();" type="button" data-dismiss="modal" class="btn btn-default pull-left">Cancle</button>
+	      
+	      <button type="button" class="btn btn-success" ng-disabled="orderForm.$pristine || orderForm.$invalid" ng-click="save()" data-dismiss="modal">
+			<span class="glyphicon glyphicon-shopping-cart"></span>
+	      	Order
+	      </button>
+
+	    </div>
+	  </div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+
+</div>
+
