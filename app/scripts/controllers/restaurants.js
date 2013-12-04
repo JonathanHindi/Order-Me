@@ -31,6 +31,11 @@ var app = angular.module('orderMeApp')
 
   	};
 
+    // If !restaurants call defaults
+    if( !$store.get('restaurants') ) {
+      $scope.defaults();
+    }
+
   	/*
   	 * Generate new Id
   	 * @notes This shouldn't happen if using a webservice,
